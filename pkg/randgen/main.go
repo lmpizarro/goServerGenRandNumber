@@ -32,7 +32,7 @@ func SetSeed(seed int64) {
 
 var vals valuePairs
 
-func createValuePairs(samples []StatSample, N int, Nsamples int) {
+func integrate(samples []StatSample, N int, Nsamples int) {
 
 	vals.pdf = make([]float64, N)
 	vals.sample = make([]float64, N)
@@ -50,6 +50,24 @@ func createValuePairs(samples []StatSample, N int, Nsamples int) {
 
 }
 
+// CreateStatFromArrays ...
+func CreateStatFromArrays(counts, values []string) {
+	log.Println("CREATESTARTFROMARRAY")
+
+	// var samples []StatSample
+
+	for i, count := range counts {
+		log.Printf("count %s value %s", count, values[i]) 
+		countf, err := strconv.Atoi(count)
+		ut.Errfunc(err)	
+		valf, err :=strconv.ParseFloat(values[i], 64)
+		ut.Errfunc(err)
+		ss := StatSample{Count: countf, Value: valf}
+		samples = append(samples, ss)
+	}
+
+	CreateStat(samples)
+}
 
 // CreateStatFromCSV ...
 func CreateStatFromCSV(filename string) {
@@ -119,7 +137,7 @@ func CreateStat(samples []StatSample) {
 
 	log.Printf("Nvals: %d, Nsamples %d", Nvals, Nsamples)
 	log.Println(samples)
-	createValuePairs(samples, Nvals, Nsamples)
+	integrate(samples, Nvals, Nsamples)
 	samplerarray = array
 }
 

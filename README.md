@@ -34,6 +34,10 @@ curl http://localhost:8080/
 
 ## References
 
+[GO by example](https://gobyexample.com/)
+[A tour of GO](https://tour.golang.org/welcome/1)
+[An intro to program in GO](https://www.golang-book.com/books/intro)
 [Go Project Structure](https://eli.thegreenplace.net/2019/simple-go-project-layout-with-modules/)
+[First Rest API Go](https://dev.to/moficodes/build-your-first-rest-api-with-go-2gcj)
 
 
