@@ -1,4 +1,4 @@
 FROM centos
 COPY . .
 EXPOSE 8080
-CMD ["./server"]
+CMD ["./rest-api"]
