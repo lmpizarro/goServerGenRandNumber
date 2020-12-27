@@ -10,7 +10,6 @@ import (
 	"time"
 
 	ut "github.com/lmpizarro/statproject/utils"
-	"github.com/montanaflynn/stats"
 )
 
 // StatSample ...
@@ -27,7 +26,7 @@ func SetSeed(seed int64) {
 }
 
 // CreateStatFromCSV ...
-func CreateStatFromCSV(filename string) []float64 {
+func CreateStatFromCSV(filename string) {
 	fp, err := os.Open(filename)
 	ut.Errfunc(err)
 
@@ -51,14 +50,15 @@ func CreateStatFromCSV(filename string) []float64 {
 		samples = append(samples, ss)
 
 	}
-	return CreateStat(samples)
+
+	CreateStat(samples)
 }
 
 // Pickone ...
-func Pickone(in []float64) float64 {
-	
-	randomIndex := rand.Intn(len(in))
-	pick := in[randomIndex]
+func Pickone() float64 {
+
+	randomIndex := rand.Intn(len(samplerarray))
+	pick := samplerarray[randomIndex]
 	return pick
 }
 
@@ -73,8 +73,10 @@ func Createarray(sample StatSample) []float64 {
 	return myarr
 }
 
+var samplerarray []float64
+
 // CreateStat ...
-func CreateStat(samples []StatSample) []float64 {
+func CreateStat(samples []StatSample) {
 
 	log.Println("CREATING STAT")
 	var array []float64
@@ -85,19 +87,16 @@ func CreateStat(samples []StatSample) []float64 {
 		array = append(array, arr...)
 	}
 
-	return array
+	samplerarray = array
 }
 
 func maindemo() {
 
-	a := CreateStat(samples)
-	fmt.Println(a)
+	CreateStat(samples)
 
-	mean, err := stats.Mean(a)
-	ut.Errfunc(err)
 	for true {
 		time.Sleep(10 * time.Second)
 
-		fmt.Println("cicle", Pickone(a), mean, err)
+		fmt.Println("cicle", Pickone())
 	}
 }
