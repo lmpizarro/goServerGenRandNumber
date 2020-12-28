@@ -5,7 +5,7 @@ import (
 )
 
 // DEBUG ...
-var DEBUG bool = true
+var DEBUG bool = false
 
 // Config ...
 func Config() string {

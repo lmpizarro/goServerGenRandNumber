@@ -19,7 +19,7 @@ type StatSample struct {
 }
 
 type valuePairs struct {
-	pdf []float64
+	pdf    []float64
 	sample []float64
 }
 
@@ -33,6 +33,7 @@ func SetSeed(seed int64) {
 var vals valuePairs
 
 func integrate(samples []StatSample, N int, Nsamples int) {
+	log.Println("CALL INTEGRATE FOR PDF")
 
 	vals.pdf = make([]float64, N)
 	vals.sample = make([]float64, N)
@@ -41,12 +42,13 @@ func integrate(samples []StatSample, N int, Nsamples int) {
 	vals.pdf[0] = float64(samples[0].Count) / float64(Nsamples)
 
 	for i := 1; i < N; i++ {
-		vals.pdf[i] = vals.pdf[i-1] + float64(samples[i].Count) / float64(Nsamples)
+		vals.pdf[i] = vals.pdf[i-1] + float64(samples[i].Count)/float64(Nsamples)
 		vals.sample[i] = samples[i].Value
-		
+
 	}
 
-	fmt.Println(vals.pdf, vals.sample, float64(N))
+	log.Println("PDF", vals.pdf)
+	log.Println("Values", vals.sample)
 
 }
 
@@ -54,13 +56,13 @@ func integrate(samples []StatSample, N int, Nsamples int) {
 func CreateStatFromArrays(counts, values []string) {
 	log.Println("CREATESTARTFROMARRAY")
 
-	// var samples []StatSample
+	var samples []StatSample
 
 	for i, count := range counts {
-		log.Printf("count %s value %s", count, values[i]) 
+		log.Printf("count %s value %s", count, values[i])
 		countf, err := strconv.Atoi(count)
-		ut.Errfunc(err)	
-		valf, err :=strconv.ParseFloat(values[i], 64)
+		ut.Errfunc(err)
+		valf, err := strconv.ParseFloat(values[i], 64)
 		ut.Errfunc(err)
 		ss := StatSample{Count: countf, Value: valf}
 		samples = append(samples, ss)

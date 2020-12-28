@@ -19,13 +19,12 @@ func getsample(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("SERVING %f", p)
 
-	resp := fmt.Sprintf(`{"randomnumber": %f" }`, p)
-
+	resp := fmt.Sprintf(`{"randomnumber": "%f", "message": "NOT ERROR" }`, p)
 	w.Write([]byte(resp))
 }
 
 //
-// curl "http://localhost:8080/api/v1/setsampler?count=10&value=5&count=10&value=6"
+// curl "http://localhost:8080/api/v1/setsampler?count=10&value=5&count=10&value=6&count=3&value=2&count=1&value=1
 func setsampler(w http.ResponseWriter, r *http.Request) {
 	log.Println("CALL SETSAMPLER WEB")
 	query := r.URL.Query()
@@ -40,17 +39,15 @@ func setsampler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("lengths not equal")
 	}
 
-	if len(counts) > 2 {
+	if len(counts) < 2 {
 		fmt.Println("not enough values")
 	}
-
-
 
 	rg.CreateStatFromArrays(counts, values)	
 
 	w.WriteHeader(200)
 
-	resp := fmt.Sprintf(`hello query`)
+	resp := fmt.Sprintf(`{"message": "NOT ERROR" }`)
 	w.Write([]byte(resp))
 }
 
